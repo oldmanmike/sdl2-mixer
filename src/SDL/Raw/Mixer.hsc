@@ -95,6 +95,16 @@ foreign import ccall unsafe "Mix_Paused" pausedFFI :: CInt -> IO CInt
 --foreign import ccall unsafe "Mix_FadingChannel" fadingChannelFFI :: CInt -> IO CInt
 foreign import ccall unsafe "Mix_GetChunk" getChunkFFI :: CInt -> IO (Ptr MixChunk)
 
+foreign import ccall unsafe "Mix_ReserveChannels" reserveChannelsFFI :: CInt -> IO CInt
+foreign import ccall unsafe "Mix_GroupChannel" groupChannelFFI :: CInt -> CInt -> IO CInt
+foreign import ccall unsafe "Mix_GroupChannels" groupChannelsFFI :: CInt -> CInt -> CInt -> IO CInt
+foreign import ccall unsafe "Mix_GroupCount" groupCountFFI :: CInt -> IO CInt
+foreign import ccall unsafe "Mix_GroupAvailable" groupAvailableFFI :: CInt -> IO CInt
+foreign import ccall unsafe "Mix_GroupOldest" groupOldestFFI :: CInt -> IO CInt
+foreign import ccall unsafe "Mix_GroupNewer" groupNewerFFI :: CInt -> IO CInt
+foreign import ccall unsafe "Mix_FadeOutGroup" fadeOutGroupFFI :: CInt -> CInt -> IO CInt
+foreign import ccall unsafe "Mix_HaltGroup" haltGroupFFI :: CInt -> IO CInt
+
 
 init :: MonadIO m => CInt -> m CInt
 init v1 = liftIO $ initFFI v1
@@ -220,6 +230,7 @@ paused :: MonadIO m => CInt -> m CInt
 paused v1 = liftIO $ pausedFFI v1
 {-# INLINE paused #-}
 
+
 {-
 --foreign import ccall unsafe "Mix_FadingChannel" fadingChannelFFI :: CInt -> IO CInt
 fadingChannel :: MonadIO m => CInt -> m CInt
@@ -227,6 +238,49 @@ fadingChannel v1 = liftIO $ (toEnum . fadingChannelFFI) $ v1
 {-# INLINE fadingChannel #-}
 -}
 
+
 getChunk :: MonadIO m => CInt -> m (Ptr MixChunk)
 getChunk v1 = liftIO $ getChunkFFI v1
 {-# INLINE getChunk #-}
+
+
+reserveChannels :: MonadIO m => CInt -> m CInt
+reserveChannels v1 = liftIO $ reserveChannelsFFI v1
+{-# INLINE reserveChannels #-}
+
+
+groupChannel :: MonadIO m => CInt -> CInt -> m CInt
+groupChannel v1 v2 = liftIO $ groupChannelFFI v1 v2
+{-# INLINE groupChannel #-}
+
+
+groupChannels :: MonadIO m => CInt -> CInt -> CInt -> m CInt
+groupChannels v1 v2 v3 = liftIO $ groupChannelsFFI v1 v2 v3
+{-# INLINE groupChannels #-}
+
+
+groupCount :: MonadIO m => CInt -> m CInt
+groupCount v1 = liftIO $ groupCountFFI v1
+{-# INLINE groupCount #-}
+
+
+groupAvailable :: MonadIO m => CInt -> m CInt
+groupAvailable v1 = liftIO $ groupAvailableFFI v1
+{-# INLINE groupAvailable #-}
+
+
+groupOldest :: MonadIO m => CInt -> m CInt
+groupOldest v1 = liftIO $ groupOldestFFI v1
+{-# INLINE groupOldest #-}
+
+groupNewer :: MonadIO m => CInt -> m CInt
+groupNewer v1 = liftIO $ groupNewerFFI v1
+{-# INLINE groupNewer #-}
+
+fadeOutGroup :: MonadIO m => CInt -> CInt -> m CInt
+fadeOutGroup v1 v2 = liftIO $ fadeOutGroupFFI v1 v2
+{-# INLINE fadeOutGroup #-}
+
+haltGroup :: MonadIO m => CInt -> m CInt
+haltGroup v1 = liftIO $ haltGroupFFI v1
+{-# INLINE haltGroup #-}
